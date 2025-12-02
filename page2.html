@@ -1,0 +1,79 @@
+<!doctype html>
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Anh muốn nói...</title>
+<link rel="stylesheet" href="style1.css">
+</head>
+<body class="page page2">
+<!-- audio (put music file named "music.mp3" vào cùng thư mục) -->
+<audio id="bgm" src="music.mp3" loop></audio>
+
+
+<!-- 3D rotatable stage -->
+<div id="stage" class="stage">
+<div class="center-content">
+<div class="big-text">Happy Birth Day Vợ Iu ❤️</div>
+<div class="small-text">Hôm nay là sinh nhật của bé</div>
+<div class="small-text">Anh chúc em bé của anh tuổi mới thêm rực rỡ</div>
+<div class="small-text">Làm gì cũng thiệt xuông xẻ</div>
+<div class="small-text">Anh mong mọi điều may mắn và tốt đẹp nhất đều đến với em tại vì em xứng đáng có được những điều đó</div>
+<div class="small-text">Dù em có 18 28 38 48 v.v thì đối với anh thì lúc nào em cũng là em bé hếtt</div>
+<div class="small-text">Mong là em sẽ thích món quà này của anh ạaa</div>
+<div class="small-text">Nó sẽ mong có giá trị vất chất cao nhưng nó sẽ đại diện cho anh để ôm em mỗi tối hehee</div>
+<div class="small-text">Cũng hong biết nói gì nữa chỉ biết là ANH IU VỢ nhiều lắmmmm ❤️❤️❤️ </div>
+</div>
+
+
+<!-- vertical scrolling messages -->
+<div class="vertical-messages">
+<div class="vm-list">
+<div>VỢ IU SINH NHẬT THIỆT VUI ẠAA</div>
+<div>TUỔI MỚI XINH GÁI HƠN</div>
+<div>CÓ ĐƯỢC NHỮNG THỨ MÌNH MUỐN</div>
+<div>THỰC HIỆN ĐƯỢC NHỮNG ĐIỀU MÌNH ƯỚC</div>
+<div>ANH YÊU VỢ NHẤT TRÊN ĐỜIII</div>
+</div>
+</div>
+
+
+</div>
+
+
+<!-- floating hearts & effects (only on page2) -->
+<div class="floating-hearts" aria-hidden="true"></n></div>
+
+
+<script>
+// play music when user interacts (autoplay restrictions)
+document.addEventListener('click', function once(){
+const a = document.getElementById('bgm');
+if(a && a.paused){ a.play().catch(()=>{}); }
+document.removeEventListener('click', once);
+});
+
+
+// Stage rotation (360-like) via pointer move
+const stage = document.getElementById('stage');
+let dragging = false, lastX=0, lastY=0, rotX=0, rotY=0;
+
+
+function setRot(){
+stage.style.transform = `perspective(1000px) rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+}
+
+
+stage.addEventListener('pointerdown', e => { dragging = true; lastX = e.clientX; lastY = e.clientY; stage.setPointerCapture(e.pointerId); });
+stage.addEventListener('pointermove', e => {
+if(!dragging) return;
+const dx = e.clientX - lastX; const dy = e.clientY - lastY;
+rotY += dx * 0.2; rotX -= dy * 0.2;
+lastX = e.clientX; lastY = e.clientY;
+setRot();
+});
+stage.addEventListener('pointerup', e => { dragging=false; stage.releasePointerCapture && stage.releasePointerCapture(e.pointerId); });
+
+
+// small auto float for stage
+let angle=0; setInterval(()=>{ angle+=0.15; stage.style.transform += ` translateZ(${Math.sin(angle)*4}px)`; }, 2000);
+</script>
+</body>
+</html>
